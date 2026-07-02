@@ -114,6 +114,39 @@ class Magazine(LibraryItem):
 
 
 # ============================================================
+# DVD CLASS (INHERITS FROM LibraryItem)
+# ============================================================
+class DVD(LibraryItem):
+    """
+    Child class representing a DVD in the library.
+
+    Additional attribute:
+        duration (int): Duration of the DVD in minutes
+    """
+
+    def __init__(self, title, author, year, duration):
+        # Call parent constructor
+        super().__init__(title, author, year)
+
+        self.duration = duration
+
+    # Method overriding (Polymorphism)
+    def display_info(self):
+        """
+        Overrides LibraryItem.display_info() to include DVD-specific information.
+        """
+
+        status = "Available" if self.available else "Borrowed"
+
+        print("\n--- DVD Information ---")
+        print(f"Title: {self.title}")
+        print(f"Director: {self.author}")
+        print(f"Year: {self.year}")
+        print(f"Duration: {self.duration} minutes")
+        print(f"Status: {status}")
+
+
+# ============================================================
 # LIBRARY CLASS
 # ============================================================
 class Library:
@@ -282,13 +315,14 @@ def display_menu():
     print("========== LIBRARY MANAGEMENT SYSTEM ==========")
     print("1. Add Book")
     print("2. Add Magazine")
-    print("3. Remove Item")
-    print("4. Borrow Item")
-    print("5. Return Item")
-    print("6. View Available Items")
-    print("7. Search Item")
-    print("8. View All Items")
-    print("9. Exit")
+    print("3. Add DVD")
+    print("4. Remove Item")
+    print("5. Borrow Item")
+    print("6. Return Item")
+    print("7. View Available Items")
+    print("8. Search Item")
+    print("9. View All Items")
+    print("10. Exit")
     print("===============================================")
 
 
@@ -320,6 +354,15 @@ def main():
         2024,
         101
     ))
+
+    library.add_item(
+        DVD(
+            "Inception",
+            "Christopher Nolan",
+            2010,
+            148
+        )
+    )
 
     # Infinite loop until user exits
     while True:
@@ -368,9 +411,28 @@ def main():
                 library.add_item(new_magazine)
 
             # ------------------------------------------------
-            # REMOVE ITEM
+            # ADD DVD
             # ------------------------------------------------
             elif choice == "3":
+
+                title = input("Title: ")
+                director = input("Director: ")
+                year = int(input("Year: "))
+                duration = int(input("Duration (in minutes): "))
+
+                new_dvd = DVD(
+                    title,
+                    director,
+                    year,
+                    duration
+                )
+
+                library.add_item(new_dvd)
+
+            # ------------------------------------------------
+            # REMOVE ITEM
+            # ------------------------------------------------
+            elif choice == "4":
 
                 title = input("Enter title to remove: ")
                 library.remove_item(title)
@@ -378,7 +440,7 @@ def main():
             # ------------------------------------------------
             # BORROW ITEM
             # ------------------------------------------------
-            elif choice == "4":
+            elif choice == "5":
 
                 title = input("Enter title to borrow: ")
                 library.borrow_item(title)
@@ -386,7 +448,7 @@ def main():
             # ------------------------------------------------
             # RETURN ITEM
             # ------------------------------------------------
-            elif choice == "5":
+            elif choice == "6":
 
                 title = input("Enter title to return: ")
                 library.return_item(title)
@@ -394,14 +456,14 @@ def main():
             # ------------------------------------------------
             # VIEW AVAILABLE ITEMS
             # ------------------------------------------------
-            elif choice == "6":
+            elif choice == "7":
 
                 library.view_available_items()
 
             # ------------------------------------------------
             # SEARCH ITEM
             # ------------------------------------------------
-            elif choice == "7":
+            elif choice == "8":
 
                 keyword = input(
                     "Enter title or author to search: "
@@ -412,14 +474,14 @@ def main():
             # ------------------------------------------------
             # VIEW ALL ITEMS
             # ------------------------------------------------
-            elif choice == "8":
+            elif choice == "9":
 
                 library.display_all_items()
 
             # ------------------------------------------------
             # EXIT
             # ------------------------------------------------
-            elif choice == "9":
+            elif choice == "10":
 
                 print("\nThank you for using the system.")
                 break

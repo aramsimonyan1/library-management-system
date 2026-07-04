@@ -159,24 +159,16 @@ class Library:
         self.items = []
 
     # --------------------------------------------------------
-    # ADD ITEM
+    # ADD ITEM - Adds a Book or Magazine object to the library.
     # --------------------------------------------------------
     def add_item(self, item):
-        """
-        Adds a Book or Magazine object to the library.
-        """
-
         self.items.append(item)
         print(f"\n'{item.title}' added successfully.")
 
     # --------------------------------------------------------
-    # REMOVE ITEM
+    # REMOVE ITEM - Removes an item from the library by title.
     # --------------------------------------------------------
     def remove_item(self, title):
-        """
-        Removes an item by title.
-        """
-
         for item in self.items:
             if item.title.lower() == title.lower():
                 self.items.remove(item)
@@ -186,13 +178,9 @@ class Library:
         print("\nItem not found.")
 
     # --------------------------------------------------------
-    # VIEW AVAILABLE ITEMS
+    # VIEW AVAILABLE ITEMS - Displays all items that are currently available for borrowing.
     # --------------------------------------------------------
     def view_available_items(self):
-        """
-        Displays all items that are currently available.
-        """
-
         available_items = [item for item in self.items if item.available]
 
         if not available_items:
@@ -205,17 +193,9 @@ class Library:
             item.display_info()
 
     # --------------------------------------------------------
-    # BORROW ITEM
+    # BORROW ITEM from the library by title. Conditions: Item must exist. Item must be available.
     # --------------------------------------------------------
     def borrow_item(self, title):
-        """
-        Allows a user to borrow an item.
-
-        Conditions:
-        - Item must exist.
-        - Item must be available.
-        """
-
         for item in self.items:
 
             if item.title.lower() == title.lower():
@@ -231,17 +211,9 @@ class Library:
         print("\nItem does not exist.")
 
     # --------------------------------------------------------
-    # RETURN ITEM
+    # RETURN ITEM to the library. Conditions: Item must exist. Item must currently be borrowed.
     # --------------------------------------------------------
     def return_item(self, title):
-        """
-        Returns an item to the library.
-
-        Conditions:
-        - Item must exist.
-        - Item must currently be borrowed.
-        """
-
         for item in self.items:
 
             if item.title.lower() == title.lower():
@@ -303,6 +275,56 @@ class Library:
             item.display_info()
 
 
+    # --------------------------------------------------------------
+    # DISPLAY SORTED ITEMS
+    # --------------------------------------------------------------
+    def sort_items(self, sort_by):
+        """
+        Sorts library items by title, author or year.
+
+        Parameters:
+            sort_by (str): Attribute used for sorting.
+                           Valid options:
+                           "title"
+                           "author"
+                           "year"
+        """
+
+        # Check whether the user entered a valid option.
+        if sort_by.lower() == "title":
+
+            # Create a sorted copy of the list.
+            sorted_items = sorted(
+                self.items,
+                key=lambda item: item.title.lower()
+            )
+
+        elif sort_by.lower() == "author":
+
+            sorted_items = sorted(
+                self.items,
+                key=lambda item: item.author.lower()
+            )
+
+        elif sort_by.lower() == "year":
+
+            sorted_items = sorted(
+                self.items,
+                key=lambda item: item.year
+            )
+
+        else:
+            print("\nInvalid sorting option.")
+            print("Please choose: title, author or year.")
+            return
+
+        # Display sorted results.
+        print(f"\n===== ALL LIBRARY ITEMS SORTED BY {sort_by.upper()} =====")
+
+        for item in sorted_items:
+            item.display_info()
+
+
 # ============================================================
 # MENU FUNCTION
 # ============================================================
@@ -322,7 +344,8 @@ def display_menu():
     print("7. View Available Items")
     print("8. Search Item")
     print("9. View All Items")
-    print("10. Exit")
+    print("10. View All Items Sorted")
+    print("11. Exit")
     print("===============================================")
 
 
@@ -479,9 +502,33 @@ def main():
                 library.display_all_items()
 
             # ------------------------------------------------
-            # EXIT
+            # VIEW ALL ITEMS SORTED
             # ------------------------------------------------
             elif choice == "10":
+
+                print("\nSort Options")
+                print("1. Title")
+                print("2. Author")
+                print("3. Year")
+
+                option = input("Choose a sorting option: ")
+
+                if option == "1":
+                    library.sort_items("title")
+
+                elif option == "2":
+                    library.sort_items("author")
+
+                elif option == "3":
+                    library.sort_items("year")
+
+                else:
+                    print("\nInvalid sorting option.")
+
+            # ------------------------------------------------
+            # EXIT
+            # ------------------------------------------------
+            elif choice == "11":
 
                 print("\nThank you for using the system.")
                 break

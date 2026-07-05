@@ -178,18 +178,30 @@ class Library:
         print("\nItem not found.")
 
     # --------------------------------------------------------
-    # VIEW AVAILABLE ITEMS - Displays all items that are currently available for borrowing.
+    # SEARCH ITEM
     # --------------------------------------------------------
-    def view_available_items(self):
-        available_items = [item for item in self.items if item.available]
+    def search_item(self, keyword):
+        """
+        Search by title or author.
 
-        if not available_items:
-            print("\nNo available items.")
+        Returns all matching results.
+        """
+
+        results = []
+
+        for item in self.items:
+
+            if (keyword.lower() in item.title.lower() or
+                    keyword.lower() in item.author.lower()):
+                results.append(item)
+
+        if not results:
+            print("\nNo matching items found.")
             return
 
-        print("\n===== AVAILABLE ITEMS =====")
+        print("\n===== SEARCH RESULTS =====")
 
-        for item in available_items:
+        for item in results:
             item.display_info()
 
     # --------------------------------------------------------
@@ -228,32 +240,6 @@ class Library:
 
         print("\nItem does not exist.")
 
-    # --------------------------------------------------------
-    # SEARCH ITEM
-    # --------------------------------------------------------
-    def search_item(self, keyword):
-        """
-        Search by title or author.
-
-        Returns all matching results.
-        """
-
-        results = []
-
-        for item in self.items:
-
-            if (keyword.lower() in item.title.lower() or
-                    keyword.lower() in item.author.lower()):
-                results.append(item)
-
-        if not results:
-            print("\nNo matching items found.")
-            return
-
-        print("\n===== SEARCH RESULTS =====")
-
-        for item in results:
-            item.display_info()
 
     # --------------------------------------------------------
     # DISPLAY ALL ITEMS
@@ -272,6 +258,22 @@ class Library:
         print("\n===== ALL LIBRARY ITEMS =====")
 
         for item in self.items:
+            item.display_info()
+
+
+    # --------------------------------------------------------
+    # VIEW AVAILABLE ITEMS - Displays all items that are currently available for borrowing.
+    # --------------------------------------------------------
+    def view_available_items(self):
+        available_items = [item for item in self.items if item.available]
+
+        if not available_items:
+            print("\nNo available items.")
+            return
+
+        print("\n===== AVAILABLE ITEMS =====")
+
+        for item in available_items:
             item.display_info()
 
 
@@ -339,10 +341,10 @@ def display_menu():
     print("2. Add Magazine")
     print("3. Add DVD")
     print("4. Remove Item")
-    print("5. Borrow Item")
-    print("6. Return Item")
-    print("7. View Available Items")
-    print("8. Search Item")
+    print("5. Search Item")
+    print("6. Borrow Item")
+    print("7. Return Item")
+    print("8. View Available Items")
     print("9. View All Items")
     print("10. View All Items Sorted")
     print("11. Exit")
@@ -461,9 +463,20 @@ def main():
                 library.remove_item(title)
 
             # ------------------------------------------------
-            # BORROW ITEM
+            # SEARCH ITEM
             # ------------------------------------------------
             elif choice == "5":
+
+                keyword = input(
+                    "Enter title or author to search: "
+                )
+
+                library.search_item(keyword)
+
+            # ------------------------------------------------
+            # BORROW ITEM
+            # ------------------------------------------------
+            elif choice == "6":
 
                 title = input("Enter title to borrow: ")
                 library.borrow_item(title)
@@ -471,7 +484,7 @@ def main():
             # ------------------------------------------------
             # RETURN ITEM
             # ------------------------------------------------
-            elif choice == "6":
+            elif choice == "7":
 
                 title = input("Enter title to return: ")
                 library.return_item(title)
@@ -479,20 +492,9 @@ def main():
             # ------------------------------------------------
             # VIEW AVAILABLE ITEMS
             # ------------------------------------------------
-            elif choice == "7":
-
-                library.view_available_items()
-
-            # ------------------------------------------------
-            # SEARCH ITEM
-            # ------------------------------------------------
             elif choice == "8":
 
-                keyword = input(
-                    "Enter title or author to search: "
-                )
-
-                library.search_item(keyword)
+                library.view_available_items()
 
             # ------------------------------------------------
             # VIEW ALL ITEMS

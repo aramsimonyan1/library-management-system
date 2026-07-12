@@ -240,7 +240,6 @@ class Library:
 
         print("\nItem does not exist.")
 
-
     # --------------------------------------------------------
     # DISPLAY ALL ITEMS
     # --------------------------------------------------------
@@ -258,22 +257,6 @@ class Library:
         print("\n===== ALL LIBRARY ITEMS =====")
 
         for item in self.items:
-            item.display_info()
-
-
-    # --------------------------------------------------------
-    # VIEW AVAILABLE ITEMS - Displays all items that are currently available for borrowing.
-    # --------------------------------------------------------
-    def view_available_items(self):
-        available_items = [item for item in self.items if item.available]
-
-        if not available_items:
-            print("\nNo available items.")
-            return
-
-        print("\n===== AVAILABLE ITEMS =====")
-
-        for item in available_items:
             item.display_info()
 
 
@@ -325,6 +308,22 @@ class Library:
 
         for item in sorted_items:
             item.display_info()
+    
+
+    # --------------------------------------------------------
+    # VIEW AVAILABLE ITEMS - Displays all items that are currently available for borrowing.
+    # --------------------------------------------------------
+    def view_available_items(self):
+        available_items = [item for item in self.items if item.available]
+
+        if not available_items:
+            print("\nNo available items.")
+            return
+
+        print("\n===== AVAILABLE ITEMS =====")
+
+        for item in available_items:
+            item.display_info()
 
 
 # ============================================================
@@ -344,9 +343,9 @@ def display_menu():
     print("5. Search Item")
     print("6. Borrow Item")
     print("7. Return Item")
-    print("8. View Available Items")
-    print("9. View All Items")
-    print("10. View All Items Sorted")
+    print("8. View All Items")
+    print("9. View All Items Sorted")
+    print("10. View Available Items")
     print("11. Exit")
     print("===============================================")
 
@@ -490,23 +489,16 @@ def main():
                 library.return_item(title)
 
             # ------------------------------------------------
-            # VIEW AVAILABLE ITEMS
-            # ------------------------------------------------
-            elif choice == "8":
-
-                library.view_available_items()
-
-            # ------------------------------------------------
             # VIEW ALL ITEMS
             # ------------------------------------------------
-            elif choice == "9":
+            elif choice == "8":
 
                 library.display_all_items()
 
             # ------------------------------------------------
             # VIEW ALL ITEMS SORTED
             # ------------------------------------------------
-            elif choice == "10":
+            elif choice == "9":
 
                 print("\nSort Options")
                 print("1. Title")
@@ -526,6 +518,13 @@ def main():
 
                 else:
                     print("\nInvalid sorting option.")
+
+            # ------------------------------------------------
+            # VIEW AVAILABLE ITEMS
+            # ------------------------------------------------
+            elif choice == "10":
+
+                library.view_available_items()
 
             # ------------------------------------------------
             # EXIT

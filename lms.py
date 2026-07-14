@@ -12,12 +12,10 @@
 
 
 # ============================================================
-# BASE CLASS
+# PARENT CLASS representing a generic library item
 # ============================================================
 class LibraryItem:
     """
-    Parent class representing a generic library item.
-
     Attributes:
         title (str): Title of the item
         author (str): Author/creator of the item

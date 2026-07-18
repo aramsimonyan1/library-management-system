@@ -1,7 +1,5 @@
 # ============================================================
-# LIBRARY MANAGEMENT SYSTEM
-# ============================================================
-# This program demonstrates:
+# LIBRARY MANAGEMENT SYSTEM demonstrates:
 # 1. Classes and Inheritance
 # 2. Polymorphism and Method Overriding
 # 3. Data Structures (Lists)
